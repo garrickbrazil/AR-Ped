@@ -4,7 +4,7 @@ Garrick Brazil, Xiaoming Liu
 
 ## Introduction
 
-Pedestrian detection framework using autoregressive network phases as detailed in [arXiv report](https://arxiv.org/abs/1812.00440), accepted to CVPR 2019. 
+Pedestrian detection framework using autoregressive network phases as detailed in [arXiv report](https://arxiv.org/abs/1812.00440), accepted to CVPR 2019. Please also visit our [project page](http://cvlab.cse.msu.edu/project-arped.html).
 
 Our AR-Ped framework is derivative work of [Faster R-CNN](https://github.com/ShaoqingRen/faster_rcnn), [RPN+BF](https://github.com/zhangliliang/RPN_BF), and [SDS-RCNN](https://github.com/garrickbrazil/SDS-RCNN). Tested with Ubuntu 16.04, CUDA 7.5, Matlab 2016a, Titan X GPU, and a modified version of Caffe v1.0 as provided. Unless otherwise stated the below scripts and instructions assume working directory in MATLAB is the project root. 
 

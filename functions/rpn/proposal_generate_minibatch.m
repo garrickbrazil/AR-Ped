@@ -64,131 +64,32 @@ function [input_blobs, random_scale_inds, im_rgb, im_aug] = proposal_generate_mi
 
             ped_mask_weights = single(ones(size(im_blob,1), size(im_blob,2)));
             ped_mask = uint8(zeros(size(im_blob,1), size(im_blob,2)));
+            
+            for gtind=1:size(boxes,1)
 
-            if conf.is_cityscapes
-                ped_mask = imread([conf.train_dir '/labels/' strrep(rois.image_id, '_leftImg8bit', '') '_gtFine_labelIds.png']);
-                ped_mask = imresize(ped_mask, [size(im_blob,1), size(im_blob,2)], 'nearest');
-                ped_mask = labelIds2trainIds(ped_mask, conf.labelmap);
-            elseif conf.is_citypersons && safeDefault(conf, 'citypersons_strong')
+                ignore = rois.gt_ignores(gtind);
+                gt = boxes(gtind,:);
 
-                ped_mask = imread([conf.train_dir '/labels/' strrep(rois.image_id, '_leftImg8bit', '') '_gtFine_labelIds.png']);
-                ped_mask = imresize(ped_mask, [size(im_blob,1), size(im_blob,2)], 'nearest');
-                ped = ped_mask==24;
-                cyc = ped_mask==25; 
+                x1 = min(max(round(gt(1)*im_scales(1)),1),size(ped_mask,2));
+                y1 = min(max(round(gt(2)*im_scales(1)),1),size(ped_mask,1));
+                x2 = min(max(round(gt(3)*im_scales(1)),1),size(ped_mask,2));
+                y2 = min(max(round(gt(4)*im_scales(1)),1),size(ped_mask,1));
 
-                ped_mask = ped_mask*0;
-                ped_mask(cyc) = 1; % changed gb
-                ped_mask(ped) = 1;
+                w = x2 - x1;
+                h = y2 - y1;
 
-            elseif conf.use_recursive && conf.iter > conf.recursive_start
+                %if ~rois.igncls(gtind)
+                    % assign fg label
+                    ped_mask(y1:y2,x1:x2) = 1;
+                %else
+                    ped_mask(y1:y2,x1:x2) = 1; % changed gb
+                %end
 
-                if conf.recursive_update==0
-                    
-                    im_tmp = single(im_rgb);
-                    im_blob_tmp = prep_im_for_blob(im_tmp, conf.image_means, conf.test_scale, conf.max_size);
+                % cost sensitive
+                if conf.cost_sensitive, ped_mask_weights(y1:y2,x1:x2) = single(1 + h/(conf.cost_mean_height*im_scales(1))); end
 
-                    % permute data into caffe c++ memory, thus [num, channels, height, width]
-                    im_blob_tmp = im_blob_tmp(:, :, [3, 2, 1], :); % from rgb to brg    
-                    im_blob_tmp = permute(im_blob_tmp, [2, 1, 3, 4]);
-                    im_blob_tmp = single(im_blob_tmp);
-
-                    net_inputs_tmp = {im_blob_tmp};
-                    sf = 1;
-                    for layerind=1:length(rpn_test_net.inputs)
-                        data_tmp = rpn_test_net.blobs(rpn_test_net.inputs{layerind}).get_data();
-                        
-                        if layerind==1
-                           sf = size(im_blob_tmp,1)/size(data_tmp,1);
-                        else
-                            if sf>1
-                                data_tmp = imresize(data_tmp, sf);
-                            end
-                            net_inputs_tmp{end+1} = data_tmp;
-                        end
-                    end
-
-                    rpn_test_net = reshape_input_data(rpn_test_net, net_inputs_tmp);
-                    rpn_test_net.forward(net_inputs_tmp);
-                else
-                    [~, ~, ~, ~, ~, scores_unfiltered] = proposal_im_detect(conf, rpn_test_net, im_rgb);
-                end
-                
-                ped_pred = rpn_test_net.blobs(conf.recursive_layer).get_data();
-                ped_pred = permute(ped_pred, [2, 1, 3, 4]);
-
-                ped_pred = ped_pred(:,:,end);
-                ped_pred = imresize(ped_pred, size(ped_mask));
-
-                for gtind=1:size(boxes,1)
-
-                    ignore = rois.gt_ignores(gtind);
-                    gt = boxes(gtind,:);
-
-                    x1 = min(max(round(gt(1)*im_scales(1)),1),size(ped_mask,2));
-                    y1 = min(max(round(gt(2)*im_scales(1)),1),size(ped_mask,1));
-                    x2 = min(max(round(gt(3)*im_scales(1)),1),size(ped_mask,2));
-                    y2 = min(max(round(gt(4)*im_scales(1)),1),size(ped_mask,1));
-
-                    w = x2 - x1;
-                    h = y2 - y1;
-
-                    thresh = 0.5;
-                    pred_labels = ped_pred(y1:y2,x1:x2)>=thresh;
-
-                    CC_fg = bwconncomp(pred_labels);
-
-                    while mean(pred_labels(:))<conf.recursive_area || (CC_fg.NumObjects>1 && conf.recursive_no_holes)
-                        thresh = thresh - 0.005;
-                        pred_labels = ped_pred(y1:y2,x1:x2)>=thresh;
-                        CC_fg = bwconncomp(pred_labels);
-                    end
-
-                    if conf.recursive_no_holes
-                        pred_labels = imfill(pred_labels, 'holes');
-                    end
-
-                    %if ~rois.igncls(gtind)
-                        % assign fg label
-                        ped_mask(y1:y2,x1:x2) = 1;
-                    %else
-                        ped_mask(y1:y2,x1:x2) = 1; % changed gb
-                    %end
-
-                    % fg weights
-                    if conf.recursive_weights
-                        ped_mask_weights(y1:y2,x1:x2) = pred_labels.*ped_pred(y1:y2,x1:x2);
-                        ped_mask_weights(y1:y2,x1:x2) = ped_mask_weights(y1:y2,x1:x2) + (~pred_labels).*(1-ped_pred(y1:y2,x1:x2));
-
-                        ped_mask_weights(y1:y2,x1:x2) = ped_mask_weights(y1:y2,x1:x2)/mean(reshape(ped_mask_weights(y1:y2,x1:x2), [], 1));
-                        %ped_mask_weights(y1:y2,x1:x2) = max(ped_mask_weights(y1:y2,x1:x2), 0.2);
-                    end
-                end
-            else
-                for gtind=1:size(boxes,1)
-
-                    ignore = rois.gt_ignores(gtind);
-                    gt = boxes(gtind,:);
-
-                    x1 = min(max(round(gt(1)*im_scales(1)),1),size(ped_mask,2));
-                    y1 = min(max(round(gt(2)*im_scales(1)),1),size(ped_mask,1));
-                    x2 = min(max(round(gt(3)*im_scales(1)),1),size(ped_mask,2));
-                    y2 = min(max(round(gt(4)*im_scales(1)),1),size(ped_mask,1));
-
-                    w = x2 - x1;
-                    h = y2 - y1;
-
-                    %if ~rois.igncls(gtind)
-                        % assign fg label
-                        ped_mask(y1:y2,x1:x2) = 1;
-                    %else
-                        ped_mask(y1:y2,x1:x2) = 1; % changed gb
-                    %end
-
-                    % cost sensitive
-                    if conf.cost_sensitive, ped_mask_weights(y1:y2,x1:x2) = single(1 + h/(conf.cost_mean_height*im_scales(1))); end
-
-                end
             end
+
             for strideind=1:length(conf.weak_strides)
 
                 stride = conf.weak_strides(strideind);
