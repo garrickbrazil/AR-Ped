@@ -1,0 +1,1282 @@
+name: "VGG_ILSVRC_16"
+
+input: "data"
+input_dim: 1
+input_dim: 3
+input_dim: 960
+input_dim: 720
+
+
+layer {
+	bottom: "data"
+	top: "conv1_1"
+	name: "conv1_1"
+	type: "Convolution"
+	param {
+		lr_mult: 0.0
+	}
+	param {
+		lr_mult: 0.0
+	}
+	convolution_param {
+		num_output: 64
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv1_1"
+	top: "conv1_1"
+	name: "relu1_1"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv1_1"
+	top: "conv1_2"
+	name: "conv1_2"
+	param {
+		lr_mult: 0.0
+	}
+	param {
+		lr_mult: 0.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 64
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv1_2"
+	top: "conv1_2"
+	name: "relu1_2"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv1_2"
+	top: "pool1"
+	name: "pool1"
+	type: "Pooling"
+	pooling_param {
+		pool: MAX
+		kernel_size: 2
+		stride: 2
+	}
+}
+
+layer {
+	bottom: "pool1"
+	top: "conv2_1"
+	name: "conv2_1"
+	param {
+		lr_mult: 0.0
+	}
+	param {
+		lr_mult: 0.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 128
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv2_1"
+	top: "conv2_1"
+	name: "relu2_1"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv2_1"
+	top: "conv2_2"
+	name: "conv2_2"
+	param {
+		lr_mult: 0.0
+	}
+	param {
+		lr_mult: 0.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 128
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv2_2"
+	top: "conv2_2"
+	name: "relu2_2"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv2_2"
+	top: "pool2"
+	name: "pool2"
+	type: "Pooling"
+	pooling_param {
+		pool: MAX
+		kernel_size: 2
+		stride: 2
+	}
+}
+
+layer {
+	bottom: "pool2"
+	top: "conv3_1"
+	name: "conv3_1"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 256
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv3_1"
+	top: "conv3_1"
+	name: "relu3_1"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv3_1"
+	top: "conv3_2"
+	name: "conv3_2"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 256
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv3_2"
+	top: "conv3_2"
+	name: "relu3_2"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv3_2"
+	top: "conv3_3"
+	name: "conv3_3"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 256
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv3_3"
+	top: "conv3_3"
+	name: "relu3_3"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv3_3"
+	top: "pool3"
+	name: "pool3"
+	type: "Pooling"
+	pooling_param {
+		pool: MAX
+		kernel_size: 2
+		stride: 2
+	}
+}
+
+layer {
+	bottom: "pool3"
+	top: "conv4_1"
+	name: "conv4_1"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 512
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv4_1"
+	top: "conv4_1"
+	name: "relu4_1"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv4_1"
+	top: "conv4_2"
+	name: "conv4_2"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 512
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv4_2"
+	top: "conv4_2"
+	name: "relu4_2"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv4_2"
+	top: "conv4_3"
+	name: "conv4_3"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 512
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv4_3"
+	top: "conv4_3"
+	name: "relu4_3"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv4_3"
+	top: "pool4"
+	name: "pool4"
+	type: "Pooling"
+	pooling_param {
+		pool: MAX
+		kernel_size: 2
+		stride: 2
+	}
+}
+
+layer {
+	bottom: "pool4"
+	top: "conv5_1"
+	name: "conv5_1"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 512
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv5_1"
+	top: "conv5_1"
+	name: "relu5_1"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv5_1"
+	top: "conv5_2"
+	name: "conv5_2"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 512
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv5_2"
+	top: "conv5_2"
+	name: "relu5_2"
+	type: "ReLU"
+}
+
+layer {
+	bottom: "conv5_2"
+	top: "conv5_3"
+	name: "conv5_3"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+	type: "Convolution"
+	convolution_param {
+		num_output: 512
+		pad: 1
+		kernel_size: 3
+	}
+}
+
+layer {
+	bottom: "conv5_3"
+	top: "conv5_3"
+	name: "relu5_3"
+	type: "ReLU"
+}
+
+#----------------------- output -------------------------
+layer {
+   name: "conv_proposal1"
+   type: "Convolution"
+   bottom: "conv5_3"
+   top: "conv_proposal1"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+   convolution_param{
+	   num_output: 512
+	   kernel_size: 3
+	   pad: 1
+	   stride: 1
+	   weight_filler {
+		 type: "gaussian"
+		 std: 0.01
+	   }
+	   bias_filler {
+		 type: "constant"
+		 value: 0
+	   }
+   }
+}
+
+layer {
+   name: "relu_conv_proposal1"
+   type: "ReLU"
+   bottom: "conv_proposal1"
+   top: "conv_proposal1"
+}
+
+layer {
+   name: "proposal_cls_score1"
+   type: "Convolution"
+   bottom: "conv_proposal1"
+   top: "proposal_cls_score1"
+   propagate_down: true
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+   convolution_param{
+	   num_output: 18   # 2(bg/fg) * 9(anchors) 
+	   kernel_size: 1
+	   pad: 0
+	   stride: 1
+	   weight_filler {
+		 type: "gaussian"
+		 std: 0.01
+	   }
+	   bias_filler {
+		 type: "constant"
+		 value: 0
+	   }
+   }
+}
+
+# ------------ prediction layers --------------
+
+layer {
+  bottom: "conv5_3"
+  top: "fpn_level_5"
+  name: "fpn_level_5"
+  type: "Convolution"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    num_output: 512 # feature width c5
+    kernel_size: 3
+    pad: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+	bottom: "fpn_level_5"
+	top: "fpn_level_5"
+	name: "bn_fpn_level_5"
+	type: "BatchNorm"
+    param { lr_mult: 0 } 
+    param { lr_mult: 0 } 
+    param { lr_mult: 0 }
+	batch_norm_param {
+		use_global_stats: true
+	}
+}
+
+layer {
+	bottom: "fpn_level_5"
+	top: "fpn_level_5"
+	name: "scale_fpn_level_5"
+	type: "Scale"
+	scale_param {
+		bias_term: true
+	}
+}
+
+layer {
+  bottom: "conv4_3"
+  top: "fpn_level_4"
+  name: "fpn_level_4"
+  type: "Convolution"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    num_output: 256 # feature width c4
+    kernel_size: 3
+    pad: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+	bottom: "fpn_level_4"
+	top: "fpn_level_4"
+	name: "bn_fpn_level_4"
+	type: "BatchNorm"
+    param { lr_mult: 0 } 
+    param { lr_mult: 0 } 
+    param { lr_mult: 0 }
+	batch_norm_param {
+		use_global_stats: true
+	}
+}
+
+layer {
+	bottom: "fpn_level_4"
+	top: "fpn_level_4"
+	name: "scale_fpn_level_4"
+	type: "Scale"
+	scale_param {
+		bias_term: true
+	}
+}
+
+layer {
+  bottom: "conv3_3"
+  top: "fpn_level_3"
+  name: "fpn_level_3"
+  type: "Convolution"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    num_output: 128 # feature width c3
+    kernel_size: 3
+    pad: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+	bottom: "fpn_level_3"
+	top: "fpn_level_3"
+	name: "bn_fpn_level_3"
+	type: "BatchNorm"
+    param { lr_mult: 0 } 
+    param { lr_mult: 0 } 
+    param { lr_mult: 0 }
+	batch_norm_param {
+		use_global_stats: true
+	}
+}
+
+layer {
+	bottom: "fpn_level_3"
+	top: "fpn_level_3"
+	name: "scale_fpn_level_3"
+	type: "Scale"
+	scale_param {
+		bias_term: true
+	}
+}
+
+# ------------------ topdown pathway -----------------------
+
+
+layer {
+  name: "fpn_level_5_up"
+  type: "Deconvolution"
+  bottom: "fpn_level_5" 
+  top: "fpn_level_5_up"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    kernel_size: 4 # formula 2 * factor - factor % 2 
+    stride: 2
+    num_output: 256 # feature width c4
+    pad: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+  name: "path_pred_5"
+  type: "Eltwise"
+  bottom: "fpn_level_5_up"
+  bottom: "fpn_level_4"
+  top: "path_pred_5"
+  eltwise_param { operation: SUM }
+}
+
+layer {
+  name: "fpn_level_4_up"
+  type: "Deconvolution"
+  bottom: "path_pred_5" 
+  top: "fpn_level_4_up"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    kernel_size: 4 # formula 2 * factor - factor % 2 
+    stride: 2
+    num_output: 128 # feature width c3
+    pad: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+  name: "path_pred_4"
+  type: "Eltwise"
+  bottom: "fpn_level_4_up"
+  bottom: "fpn_level_3"
+  top: "path_pred_4"
+  eltwise_param { operation: SUM }
+}
+
+#----------------------- path 4 predb -------------------------
+
+layer {
+  bottom: "path_pred_4"
+  top: "path_pred_4b"
+  name: "path_pred_4b"
+  type: "Convolution"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    num_output: 256 # feature width c4
+    kernel_size: 3
+    pad: 1
+    stride: 2
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+#----------------------- path 3 predb -------------------------
+
+layer {
+  bottom: "path_pred_5"
+  top: "path_pred_5b"
+  name: "path_pred_5b"
+  type: "Convolution"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    num_output: 256 # feature width c4
+    kernel_size: 3
+    pad: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+  name: "pred4b"
+  type: "Eltwise"
+  bottom: "path_pred_4b"
+  bottom: "path_pred_5b"
+  top: "pred4b"
+  eltwise_param { operation: SUM }
+}
+
+layer {
+  bottom: "pred4b"
+  top: "pool_pred4b"
+  name: "pool_pred4b"
+  type: "Convolution"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    num_output: 512 # feature width c5
+    kernel_size: 3
+    pad: 1
+    stride: 2
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+#----------------------- path 3 predb -------------------------
+
+layer {
+  bottom: "fpn_level_5"
+  top: "path_pred_5c"
+  name: "path_pred_5c"
+  type: "Convolution"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    num_output: 512 # feature width c5
+    kernel_size: 3
+    pad: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+  name: "pred4c"
+  type: "Eltwise"
+  bottom: "pool_pred4b"
+  bottom: "path_pred_5c"
+  top: "pred4c"
+  eltwise_param { operation: SUM }
+}
+
+layer {
+   name: "relu_pred4c"
+   type: "ReLU"
+   bottom: "pred4c"
+   top: "pred4c"
+}
+
+#----------------------- PATH 2 prediction layers --------------
+
+layer {
+  bottom: "pred4c"
+  top: "fpn_level_5_x2"
+  name: "fpn_level_5_x2"
+  type: "Convolution"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    num_output: 512 # feature width c5
+    kernel_size: 3
+    pad: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+	bottom: "fpn_level_5_x2"
+	top: "fpn_level_5_x2"
+	name: "bn_fpn_level_5_x2"
+	type: "BatchNorm"
+    param { lr_mult: 0 } 
+    param { lr_mult: 0 } 
+    param { lr_mult: 0 }
+	batch_norm_param {
+		use_global_stats: true
+	}
+}
+
+layer {
+	bottom: "fpn_level_5_x2"
+	top: "fpn_level_5_x2"
+	name: "scale_fpn_level_5_x2"
+	type: "Scale"
+    param { 
+	    lr_mult: 0
+	    decay_mult: 0
+    } 
+	param { 
+	    lr_mult: 0
+	    decay_mult: 0
+    } 
+	scale_param {
+		bias_term: true
+	}
+}
+
+layer {
+  bottom: "pred4b"
+  top: "fpn_level_4_x2"
+  name: "fpn_level_4_x2"
+  type: "Convolution"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    num_output: 256 # feature width c4
+    kernel_size: 3
+    pad: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+	bottom: "fpn_level_4_x2"
+	top: "fpn_level_4_x2"
+	name: "bn_fpn_level_4_x2"
+	type: "BatchNorm"
+    param { lr_mult: 0 } 
+    param { lr_mult: 0 } 
+    param { lr_mult: 0 }
+	batch_norm_param {
+		use_global_stats: true
+	}
+}
+
+layer {
+	bottom: "fpn_level_4_x2"
+	top: "fpn_level_4_x2"
+	name: "scale_fpn_level_4_x2"
+	type: "Scale"
+    param { 
+	    lr_mult: 0
+	    decay_mult: 0
+    } 
+	param { 
+	    lr_mult: 0
+	    decay_mult: 0
+    } 
+	scale_param {
+		bias_term: true
+	}
+}
+
+
+# ------------------ topdown pathway -----------------------
+
+
+layer {
+  name: "fpn_level_5_up_x2"
+  type: "Deconvolution"
+  bottom: "fpn_level_5_x2" 
+  top: "fpn_level_5_up_x2"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    kernel_size: 4 # formula 2 * factor - factor % 2 
+    stride: 2
+    num_output: 256 # feature width c4
+    pad: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+  name: "path_pred_5_x2"
+  type: "Eltwise"
+  bottom: "fpn_level_5_up_x2"
+  bottom: "fpn_level_4_x2"
+  top: "path_pred_5_x2"
+  eltwise_param { operation: SUM }
+}
+
+
+#----------------------- path 3 predb -------------------------
+
+layer {
+  bottom: "path_pred_5_x2"
+  top: "pool_pred4b_x2"
+  name: "pool_pred4b_x2"
+  type: "Convolution"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    num_output: 512 # feature width c5
+    kernel_size: 3
+    pad: 1
+    stride: 2
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+#----------------------- path 3 predb -------------------------
+
+layer {
+  bottom: "fpn_level_5_x2"
+  top: "path_pred_5c_x2"
+  name: "path_pred_5c_x2"
+  type: "Convolution"
+  param {
+    lr_mult: 1 # new layer
+  }
+  param {
+    lr_mult: 2 # new layer
+  }
+  convolution_param {
+    num_output: 512 # feature width c5
+    kernel_size: 3
+    pad: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+  name: "pred4c_x2"
+  type: "Eltwise"
+  bottom: "pool_pred4b_x2"
+  bottom: "path_pred_5c_x2"
+  top: "pred4c_x2"
+  eltwise_param { operation: SUM }
+}
+
+layer {
+   name: "relu_pred4c_x2"
+   type: "ReLU"
+   bottom: "pred4c_x2"
+   top: "pred4c_x2"
+}
+
+#----------------------- output -------------------------
+layer {
+  bottom: "pred4c"
+  bottom: "proposal_cls_score1"
+  top: "pred4c_concat"
+  name: "pred4c_concat"
+  type: "Concat"
+  propagate_down: true
+  propagate_down: false
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+   name: "conv_proposal2"
+   type: "Convolution"
+   bottom: "pred4c_concat"
+   top: "conv_proposal2"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+   convolution_param{
+	   num_output: 512
+	   kernel_size: 3
+	   pad: 1
+	   stride: 1
+	   weight_filler {
+		 type: "gaussian"
+		 std: 0.01
+	   }
+	   bias_filler {
+		 type: "constant"
+		 value: 0
+	   }
+   }
+}
+
+layer {
+   name: "relu_conv_proposal2"
+   type: "ReLU"
+   bottom: "conv_proposal2"
+   top: "conv_proposal2"
+}
+
+layer {
+   name: "proposal_cls_score2"
+   type: "Convolution"
+   bottom: "conv_proposal2"
+   top: "proposal_cls_score2"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+   convolution_param{
+	   num_output: 18   # 2(bg/fg) * 9(anchors) 
+	   kernel_size: 1
+	   pad: 0
+	   stride: 1
+	   weight_filler {
+		 type: "gaussian"
+		 std: 0.01
+	   }
+	   bias_filler {
+		 type: "constant"
+		 value: 0
+	   }
+   }
+}
+
+#--------- output for path 3 ----------
+layer {
+  bottom: "pred4c_x2"
+  bottom: "proposal_cls_score2"
+  top:  "pred4c_x2_concat"
+  name: "pred4c_x2_concat"
+  type: "Concat"
+  propagate_down: true
+  propagate_down: false
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+   name: "conv_proposal3"
+   type: "Convolution"
+   bottom: "pred4c_x2_concat"
+   top: "conv_proposal3"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+   convolution_param{
+	   num_output: 512
+	   kernel_size: 3
+	   pad: 1
+	   stride: 1
+	   weight_filler {
+		 type: "gaussian"
+		 std: 0.01
+	   }
+	   bias_filler {
+		 type: "constant"
+		 value: 0
+	   }
+   }
+}
+
+layer {
+   name: "relu_conv_proposal3"
+   type: "ReLU"
+   bottom: "conv_proposal3"
+   top:    "conv_proposal3"
+}
+
+layer {
+   name: "proposal_cls_score3"
+   type: "Convolution"
+   bottom: "conv_proposal3"
+   top:    "proposal_cls_score3"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+   convolution_param{
+	   num_output: 18   # 2(bg/fg) * 9(anchors) 
+	   kernel_size: 1
+	   pad: 0
+	   stride: 1
+	   weight_filler {
+		 type: "gaussian"
+		 std: 0.01
+	   }
+	   bias_filler {
+		 type: "constant"
+		 value: 0
+	   }
+   }
+}
+
+layer {
+   name: "proposal_bbox_pred"
+   type: "Convolution"
+   bottom: "conv_proposal3"
+   top: "proposal_bbox_pred"
+	param {
+		lr_mult: 1.0
+	}
+	param {
+		lr_mult: 2.0
+	}
+   convolution_param{
+	   num_output: 36	# 4 * 9(anchors) 
+	   kernel_size: 1
+	   pad: 0
+	   stride: 1
+	   weight_filler {
+		 type: "gaussian"
+		 std: 0.01
+	   }
+	   bias_filler {
+		 type: "constant"
+		 value: 0
+	   }
+   }
+}
+
+#----------------------- phase 1-2 combine ------------------------
+
+# to enable the calculation of softmax loss, we first reshape blobs related to SoftmaxWithLoss
+layer {
+   bottom: "proposal_cls_score1"
+   top:  "proposal_cls_score_reshape1"
+   name: "proposal_cls_score_reshape1"
+   type: "Reshape"
+   reshape_param{
+	   shape {
+			dim: 0 
+			dim: 2
+			dim: -1 
+			dim: 0
+		}
+	}
+}
+
+layer {
+   bottom: "proposal_cls_score2"
+   top:  "proposal_cls_score_reshape2"
+   name: "proposal_cls_score_reshape2"
+   type: "Reshape"
+   reshape_param{
+	   shape {
+			dim: 0 
+			dim: 2
+			dim: -1 
+			dim: 0
+		}
+	}
+}
+
+layer {
+   bottom: "proposal_cls_score3"
+   top:  "proposal_cls_score_reshape3"
+   name: "proposal_cls_score_reshape3"
+   type: "Reshape"
+   reshape_param{
+	   shape {
+			dim: 0 
+			dim: 2
+			dim: -1 
+			dim: 0
+		}
+	}
+}
+
+layer {
+   name: "proposal_cls_prob1"
+   type: "Softmax"
+   bottom: "proposal_cls_score_reshape1"
+   top: "proposal_cls_prob1"
+}
+
+
+layer {
+   name: "proposal_cls_prob2"
+   type: "Softmax"
+   bottom: "proposal_cls_score_reshape2"
+   top: "proposal_cls_prob2"
+}
+
+layer {
+   name: "proposal_cls_prob"
+   type: "Softmax"
+   bottom: "proposal_cls_score_reshape3"
+   top: "proposal_cls_prob"
+}

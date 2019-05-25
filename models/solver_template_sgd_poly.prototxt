@@ -1,0 +1,11 @@
+net: "{train_proto}"
+base_lr: {lr}
+lr_policy: "poly"
+power: {step_size}
+max_iter: {max_iter}
+momentum: 0.9
+weight_decay: 0.0005
+display: 0
+snapshot: {snapshot_iter}
+snapshot_prefix: "{output_dir}/weights/snap"
+
